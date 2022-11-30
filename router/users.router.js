@@ -1,30 +1,32 @@
 const express = require("express");
-const UsersRouter = express.Router();
-const UsersController = require("./../controller/users.controller");
-const userValidtor = require("./../middlewares/RequestValidator");
+const Router = express.Router();
+const Controller = require("./../controller/users.controller");
+const Validtor = require("../middlewares/Validator");
 
-UsersRouter.get("/", UsersController.get_All_Users);
-UsersRouter.get(
+Router.get("/", Controller.get_All_Users);
+
+Router.get(
   "/:id",
-  [userValidtor.userIdValidtor],
-  UsersController.get_User
+  [Validtor.userIdValidtor],
+  Controller.get_User
 );
-UsersRouter.post(
+
+Router.put(
+  "/:id",
+  [Validtor.user_Body_Validtor, Validtor.userIdValidtor],
+  Controller.putUser
+);
+
+Router.delete(
+  "/:id",
+  [Validtor.userIdValidtor],
+  Controller.delete_User
+);
+
+Router.post(
   "/",
-  [userValidtor.user_Body_Validtor, userValidtor.find_Duplicate],
-  UsersController.post_New_Users
+  [Validtor.user_Body_Validtor, Validtor.user_Find_duplicate],
+  Controller.post_User
 );
-UsersRouter.put(
-  "/:id",
-  [userValidtor.user_Body_Validtor, userValidtor.userIdValidtor],
-  UsersController.putUser
-);
-// UsersRouter.put(
-//   "/:user_name",
-//   [userValidtor.user_Body_Validtor, userValidtor.userIdValidtor],
-//   UsersController.put_user_name
-// );
 
-UsersRouter.delete("/:id",[userValidtor.userIdValidtor],UsersController.delete_User);
-
-module.exports = UsersRouter;
+module.exports = Router;

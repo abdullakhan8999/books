@@ -22,19 +22,19 @@ const init = async () => {
 const insertBooks = async () => {
   await db.books.bulkCreate([
     {
-      tile: "A Better India: A Better World publication",
+      title: "A Better India: A Better World publication",
       author: "Narayana Murthy",
       publication: "21 April 2009",
       price: 763,
     },
     {
-      tile: "A Passage to India",
+      title: "A Passage to India",
       author: "E.M. Foster",
       publication: "4 June 1924",
       price: 123,
     },
     {
-      tile: "A Revenue Stamp",
+      title: "A Revenue Stamp",
       author: "Amrita Pritam",
       publication: "1977",
       price: 189,

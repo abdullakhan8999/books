@@ -10,7 +10,7 @@ db.books = db.connection.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    tile: {
+    title: {
       type: sequelize.STRING,
     },
     author: {

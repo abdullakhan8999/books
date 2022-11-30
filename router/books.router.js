@@ -1,8 +1,16 @@
 const express = require("express");
-const BooksRouter = express.Router();
-const BooksController = require("./../controller/books.controller");
+const Router = express.Router();
+const Controller = require("./../controller/books.controller");
+const Validator = require("../middlewares/Validator");
 
-BooksRouter.get("/", BooksController.get_All_books);
-// BooksRouter.get("/:tile                                                  ", BooksController.books_By_name);
+Router.get("/", Controller.get_All_books);
 
-module.exports = BooksRouter;
+Router.get("/:title", [Validator.bookIdValidtor], Controller.get_Book);
+Router.post(
+  "/",
+  [Validator.book_Body_Validtor, Validator.book_Find_duplicate],
+  Controller.post_Book
+);
+Router.put("/:title", [Validator.bookIdValidtor], Controller.put_Book);
+Router.delete("/:title", [Validator.bookIdValidtor], Controller.delete_Book);
+module.exports = Router;

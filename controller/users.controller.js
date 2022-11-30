@@ -22,14 +22,15 @@ const get_User = async (req, res, next) => {
     next(error);
   }
 };
-const post_New_Users = async (req, res, next) => {
+
+const post_User = async (req, res, next) => {
   try {
-    const User_Body = req.body;
-    await db.users.create(User_Body);
-    res.write("New user added");
+    let user = req.body;
+    await db.users.create(user);
+    res.status(201).send("New User added");
     res.end();
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -64,7 +65,7 @@ const delete_User = async (req, res, next) => {
 module.exports = {
   get_All_Users,
   get_User,
-  post_New_Users,
   putUser,
   delete_User,
+  post_User,
 };
