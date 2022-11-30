@@ -1,8 +1,8 @@
-const sequelize = require("sequelize");
-const db = require("./../model/index");
-
-db.connection = new sequelize("books_db", "root", "Ammiabba@143", {
-  host: "localhost",
+module.exports = {
+  DB: "books_db",
+  HOST: "localhost",
+  USER: "root",
+  PASSWORD: "Ammiabba@143",
   dialect: "mysql",
   operatorsAliases: 0,
   pool: {
@@ -11,6 +11,4 @@ db.connection = new sequelize("books_db", "root", "Ammiabba@143", {
     acquire: 30000,
     idle: 10000,
   },
-});
-
-module.exports = db;
+};

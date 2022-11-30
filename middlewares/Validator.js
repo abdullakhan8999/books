@@ -1,6 +1,6 @@
 const db = require("../model/index");
 
-const userIdValidtor = async (req, res, next) => {
+exports.userIdValidtor = async (req, res, next) => {
   const id = req.params.id;
   if (id) {
     const user = await db.users.findByPk(id);
@@ -11,7 +11,7 @@ const userIdValidtor = async (req, res, next) => {
   }
   next();
 };
-const bookIdValidtor = async (req, res, next) => {
+exports.bookIdValidtor = async (req, res, next) => {
   const title = req.params.title;
   if (title) {
     const book = await db.books.findOne({ where: { title: title } });
@@ -23,7 +23,7 @@ const bookIdValidtor = async (req, res, next) => {
   next();
 };
 
-const user_Body_Validtor = async (req, res, next) => {
+exports.user_Body_Validtor = async (req, res, next) => {
   if (!req.body) {
     res.status(400).json({
       message: "Please enter valid information to proceed",
@@ -50,7 +50,7 @@ const user_Body_Validtor = async (req, res, next) => {
   }
   next();
 };
-const book_Body_Validtor = async (req, res, next) => {
+exports.book_Body_Validtor = async (req, res, next) => {
   if (!req.body) {
     res.status(400).json({
       message: "Please enter valid information to proceed",
@@ -84,7 +84,7 @@ const book_Body_Validtor = async (req, res, next) => {
   next();
 };
 
-const user_Find_duplicate = async (req, res, next) => {
+exports.user_Find_duplicate = async (req, res, next) => {
   // here use find one
   const user = await db.users.findOne({
     where: { user_name: req.body.user_name },
@@ -98,7 +98,7 @@ const user_Find_duplicate = async (req, res, next) => {
     return;
   }
 };
-const book_Find_duplicate = async (req, res, next) => {
+exports.book_Find_duplicate = async (req, res, next) => {
   const book = await db.books.findOne({
     where: { title: req.body.title },
   });
@@ -111,14 +111,3 @@ const book_Find_duplicate = async (req, res, next) => {
     return;
   }
 };
-
-const validator = {
-  user_Body_Validtor,
-  book_Body_Validtor,
-  userIdValidtor,
-  bookIdValidtor,
-  user_Find_duplicate,
-  book_Find_duplicate,
-};
-
-module.exports = validator;

@@ -1,6 +1,6 @@
 const db = require("./../model/index");
 
-const get_All_books = async (req, res, next) => {
+exports.get_All_books = async (req, res, next) => {
   try {
     const books = await db.books.findAll();
     res.writeHead(200, { "Content-Type": "application/json" });
@@ -11,7 +11,7 @@ const get_All_books = async (req, res, next) => {
   }
 };
 
-const get_Book = async (req, res, next) => {
+exports.get_Book = async (req, res, next) => {
   try {
     const title = req.params.title;
     const get_Books = await db.books.findAll({ where: { title: title } });
@@ -24,7 +24,7 @@ const get_Book = async (req, res, next) => {
   }
 };
 
-const post_Book = async (req, res, next) => {
+exports.post_Book = async (req, res, next) => {
   try {
     let book = req.body;
     await db.books.create(book);
@@ -35,7 +35,7 @@ const post_Book = async (req, res, next) => {
   }
 };
 
-const put_Book = async (req, res, next) => {
+exports.put_Book = async (req, res, next) => {
   try {
     const title = req.params.title;
     const update_book = {
@@ -53,18 +53,10 @@ const put_Book = async (req, res, next) => {
   }
 };
 
-const delete_Book = async (req, res, next) => {
+exports.delete_Book = async (req, res, next) => {
   const book = req.params.title;
   await db.books.destroy({ where: { title: book } });
   res.write("message: Book deleted successfully");
   res.end();
   next();
-};
-
-module.exports = {
-  get_All_books,
-  get_Book,
-  post_Book,
-  put_Book,
-  delete_Book,
 };

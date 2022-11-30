@@ -1,6 +1,6 @@
 const db = require("./../model/index");
 
-const get_All_Users = async (req, res, next) => {
+exports.get_All_Users = async (req, res, next) => {
   try {
     const users = await db.users.findAll();
     res.writeHead(200, { "Content-Type": "application/json" });
@@ -10,7 +10,8 @@ const get_All_Users = async (req, res, next) => {
     next(error);
   }
 };
-const get_User = async (req, res, next) => {
+
+exports.get_User = async (req, res, next) => {
   try {
     const id = req.params.id;
     const get_User = await db.users.findByPk(id);
@@ -23,7 +24,7 @@ const get_User = async (req, res, next) => {
   }
 };
 
-const post_User = async (req, res, next) => {
+exports.post_User = async (req, res, next) => {
   try {
     let user = req.body;
     await db.users.create(user);
@@ -34,7 +35,7 @@ const post_User = async (req, res, next) => {
   }
 };
 
-const putUser = async (req, res, next) => {
+exports.putUser = async (req, res, next) => {
   try {
     const id = req.params.id;
     const update_User = {
@@ -51,7 +52,7 @@ const putUser = async (req, res, next) => {
   }
 };
 
-const delete_User = async (req, res, next) => {
+exports.delete_User = async (req, res, next) => {
   try {
     const id = req.params.id;
     await db.users.destroy({ where: { id: id } });
@@ -60,12 +61,4 @@ const delete_User = async (req, res, next) => {
   } catch (error) {
     next();
   }
-};
-
-module.exports = {
-  get_All_Users,
-  get_User,
-  putUser,
-  delete_User,
-  post_User,
 };

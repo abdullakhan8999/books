@@ -1,26 +1,47 @@
 // npm run dev
 const express = require("express");
-const App = express();
-const bodyparser = require("body-parser");
-const router = require("./router/index");
 const serverConfig = require("./config/server.config");
-const db = require("./model/index");
-const dbConfig = require("./config/db.config");
-const Books = require("./model/Books.model");
-const Admin = require("./model/Admin.model");
-const Users = require("./model/User.model");
+const bodyparser = require("body-parser");
+const App = express();
+App.use(bodyparser.urlencoded({ extended: true }));
 App.use(bodyparser.json());
-App.use(router);
+const db = require("./model/index");
 
-const init = async () => {
-  await db.connection.sync({ force: true });
+db.connection.sync({ force: true }).then(() => {
+  console.log("tables dropped and recreated");
   insertBooks();
   insertUsers();
   insertAdmin();
+});
+const insertUsers = async () => {
+  const users = [
+    {
+      user_name: "Abdulla Khan",
+      email: "abdulla@khan",
+      password: "abdul@khan",
+    },
+    {
+      user_name: "Patan Abdulla Khan",
+      email: "abdulla@Patan_khan",
+      password: "abdul@Patan_khan",
+    },
+    {
+      user_name: "Azeez",
+      email: "AZEEZ@1234",
+      password: "azeez@321",
+    },
+  ];
+  await db.users
+    .bulkCreate(users)
+    .then(() => {
+      console.log("Users table is initialized");
+    })
+    .catch((err) => {
+      console.log(`Error ${err} while initializing users table`);
+    });
 };
-
 const insertBooks = async () => {
-  await db.books.bulkCreate([
+  const books = [
     {
       title: "A Better India: A Better World publication",
       author: "Narayana Murthy",
@@ -39,41 +60,41 @@ const insertBooks = async () => {
       publication: "1977",
       price: 189,
     },
-  ]);
-};
-
-const insertUsers = async () => {
-  await db.users.bulkCreate([
-    {
-      user_name: "Abdulla Khan",
-      email: "abdulla@khan",
-      password: "abdul@khan",
-    },
-    {
-      user_name: "Patan Abdulla Khan",
-      email: "abdulla@Patan_khan",
-      password: "abdul@Patan_khan",
-    },
-    {
-      user_name: "Azeez",
-      email: "AZEEZ@1234",
-      password: "azeez@321",
-    },
-  ]);
+  ];
+  await db.books
+    .bulkCreate(books)
+    .then(() => {
+      console.log("Books table is initialized");
+    })
+    .catch((err) => {
+      console.log(`Error ${err} while initializing Books table`);
+    });
 };
 const insertAdmin = async () => {
-  await db.admin.bulkCreate([
+  const admin = [
     {
       admin_name: "Abdulla Khan",
       email: "abdulla@khan",
       password: "abdul@khan",
     },
-  ]);
+  ];
+  await db.admin
+    .bulkCreate(admin)
+    .then(() => {
+      console.log("Admin table is initialized");
+    })
+    .catch((err) => {
+      console.log(`Error ${err} while initializing admin table`);
+    });
 };
+
+require("./router/index")(App);
+require("./router/users.router")(App);
+require("./router/books.router")(App);
+require("./router/adminRouter")(App);
 
 App.listen(serverConfig.PORT, () => {
   console.log(
     `Server is up and running on http://localhost:${serverConfig.PORT}`
   );
-  init();
 });

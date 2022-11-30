@@ -1,7 +1,6 @@
-const express = require("express");
-const adminRouter = express.Router();
 const adminController = require("./../controller/admin.controller");
-
-adminRouter.get("/", adminController.get_All_admin);
-
-module.exports = adminRouter;
+const Validator = require("../middlewares/Validator");
+const api = "/ecomm/api/v1/admin/";
+module.exports = function (App) {
+  App.get(`${api}`, adminController.get_All_admin);
+};
