@@ -7,6 +7,9 @@ App.use(bodyparser.urlencoded({ extended: true }));
 App.use(bodyparser.json());
 const db = require("./model/index");
 
+db.admin.hasMany(db.users);
+db.users.hasMany(db.admin);
+
 db.connection.sync({ force: true }).then(() => {
   console.log("tables dropped and recreated");
   insertBooks();
