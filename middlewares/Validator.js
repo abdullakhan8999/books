@@ -1,6 +1,7 @@
 const db = require("../model/index");
 
-exports.userIdValidtor = async (req, res, next) => {
+//Id validator
+exports.userIdValidator = async (req, res, next) => {
   const id = req.params.id;
   if (id) {
     const user = await db.users.findByPk(id);
@@ -11,7 +12,7 @@ exports.userIdValidtor = async (req, res, next) => {
   }
   next();
 };
-exports.bookIdValidtor = async (req, res, next) => {
+exports.bookIdValidator = async (req, res, next) => {
   const title = req.params.title;
   if (title) {
     const book = await db.books.findOne({ where: { title: title } });
@@ -22,8 +23,20 @@ exports.bookIdValidtor = async (req, res, next) => {
   }
   next();
 };
+exports.adminIdValidator = async (req, res, next) => {
+  const id = req.params.id;
+  if (id) {
+    const admin = await db.admin.findByPk(id);
+    if (!admin) {
+      res.status(404).write(`Admin by id: ${id} dose not exist.`);
+      res.end();
+    }
+  }
+  next();
+};
 
-exports.user_Body_Validtor = async (req, res, next) => {
+// Body Validator
+exports.user_Body_Validator = async (req, res, next) => {
   if (!req.body) {
     res.status(400).json({
       message: "Please enter valid information to proceed",
@@ -50,7 +63,7 @@ exports.user_Body_Validtor = async (req, res, next) => {
   }
   next();
 };
-exports.book_Body_Validtor = async (req, res, next) => {
+exports.book_Body_Validator = async (req, res, next) => {
   if (!req.body) {
     res.status(400).json({
       message: "Please enter valid information to proceed",
@@ -83,7 +96,35 @@ exports.book_Body_Validtor = async (req, res, next) => {
   }
   next();
 };
+exports.admin_Body_Validator = async (req, res, next) => {
+  if (!req.body) {
+    res.status(400).json({
+      message: "Please enter valid information to proceed",
+    });
+    return;
+  }
+  if (!req.body.admin_name) {
+    res.status(400).json({
+      message: "Please enter valid information to proceed",
+    });
+    return;
+  }
+  if (!req.body.email) {
+    res.status(400).json({
+      message: "Please enter valid information to proceed",
+    });
+    return;
+  }
+  if (!req.body.password) {
+    res.status(400).json({
+      message: "Please enter valid information to proceed",
+    });
+    return;
+  }
+  next();
+};
 
+// Duplicate
 exports.user_Find_duplicate = async (req, res, next) => {
   // here use find one
   const user = await db.users.findOne({
@@ -107,6 +148,19 @@ exports.book_Find_duplicate = async (req, res, next) => {
   } else {
     res.json({
       message: "book already exits",
+    });
+    return;
+  }
+};
+exports.admin_Find_duplicate = async (req, res, next) => {
+  const admin = await db.admin.findOne({
+    where: { admin_name: req.body.admin_name },
+  });
+  if (!admin) {
+    next();
+  } else {
+    res.json({
+      message: "Admin already exits",
     });
     return;
   }
