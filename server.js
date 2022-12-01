@@ -79,6 +79,7 @@ const insertAdmin = async () => {
       admin_name: "Abdulla Khan",
       email: "abdulla@khan",
       password: "abdul@khan",
+      userId : 1
     },
   ];
   await db.admin
