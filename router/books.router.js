@@ -4,7 +4,7 @@ const api = "/ecomm/api/v1/books";
 module.exports = function (App) {
   App.get(`${api}`, Controller.get_All_books);
 
-  App.get(`${api}/:id`, [Validator.bookIdValidtor], Controller.get_Book);
+  App.get(`${api}/:title`, [Validator.bookIdValidtor], Controller.get_Book);
 
   App.post(
     `${api}/`,

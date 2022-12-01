@@ -15,7 +15,7 @@ module.exports = (sequelize, db_connection) => {
         type: sequelize.STRING,
       },
       publication: {
-        type: sequelize.STRING,
+        type: sequelize.INTEGER,
       },
       price: {
         type: sequelize.BIGINT,
