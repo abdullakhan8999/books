@@ -22,6 +22,17 @@ exports.bookIdValidtor = async (req, res, next) => {
   }
   next();
 };
+exports.adminIdValidtor = async (req, res, next) => {
+  const id = req.params.id;
+  if (id) {
+    const admin = await db.admin.findByPk(id);
+    if (!admin) {
+      res.status(404).write(`Admin by id: ${id} dose not exist.`);
+      res.end();
+    }
+  }
+  next();
+};
 
 exports.user_Body_Validtor = async (req, res, next) => {
   if (!req.body) {

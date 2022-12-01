@@ -48,28 +48,28 @@ const insertBooks = async () => {
     {
       title: "A Better India: A Better World publication",
       author: "Narayana Murthy",
-      publication: "21 April 2009",
+      publication: 2009,
       price: 763,
     },
     {
       title: "A Passage to India",
       author: "E.M. Foster",
-      publication: "4 June 1924",
+      publication: 1924,
       price: 123,
     },
     {
       title: "A Revenue Stamp",
       author: "Amrita Pritam",
-      publication: "1977",
+      publication: 1977,
       price: 189,
     },
   ];
   await db.books
-    .bulkCreate(books)
-    .then(() => {
-      console.log("Books table is initialized");
-    })
-    .catch((err) => {
+  .bulkCreate(books)
+  .then(() => {
+    console.log("Books table is initialized");
+  })
+  .catch((err) => {
       console.log(`Error ${err} while initializing Books table`);
     });
 };
@@ -79,7 +79,7 @@ const insertAdmin = async () => {
       admin_name: "Abdulla Khan",
       email: "abdulla@khan",
       password: "abdul@khan",
-      userId : 1
+      userId: 1,
     },
   ];
   await db.admin
