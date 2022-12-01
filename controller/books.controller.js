@@ -95,6 +95,7 @@ exports.post_Book = async (req, res, next) => {
         `Book name: ${book.title} got inserted in DB 
           ${JSON.stringify(book, null, 2)}`
       );
+      res.end();
     })
     .catch((err) => {
       console.log(
