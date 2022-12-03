@@ -16,7 +16,22 @@ const db = {};
 db.connection = db_connection;
 db.sequelize = sequelize;
 db.admin = require("./Admin.model")(sequelize, db_connection);
-db.users = require("./User.model")(sequelize, db_connection);
 db.books = require("./Books.model")(sequelize, db_connection);
+db.users = require("./User.model")(sequelize, db_connection);
+db.role = require("./Role.model")(sequelize, db_connection);
+
+db.role.belongsToMany(db.users, {
+  through: "user_roles",
+  foreignKey: "roleId",
+  otherKey: "userId",
+});
+
+db.users.belongsToMany(db.role, {
+  through: "user_roles",
+  foreignKey: "userId",
+  otherKey: "roleId",
+});
+
+db.ROLES = ["user", "admin"];
 
 module.exports = db;
