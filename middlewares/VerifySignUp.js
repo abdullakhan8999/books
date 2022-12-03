@@ -4,6 +4,16 @@ const User = db.users;
 const ROLES = db.ROLES;
 
 exports.find_Duplicate_UserName_Email = async (req, res, next) => {
+  if (
+    !req.body.user_name ||
+    !req.body.email ||
+    !req.body.password ||
+    !req.body.roles
+  ) {
+    return res.status(400).json({
+      message: "Please enter valid information to proceed",
+    });
+  }
   await User.findOne({
     where: {
       user_name: req.body.user_name,

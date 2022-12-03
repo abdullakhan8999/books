@@ -1,6 +1,8 @@
 const auth_Controller = require("./../controller/auth.controller");
 const verify_SignUP = require("./../middlewares/VerifySignUp");
+const verify_SignIN = require("./../middlewares/VerifySignIn");
 const api = "/ecomm/api/v1/auth";
+
 module.exports = function (App) {
   App.use(function (req, res, next) {
     res.header(
@@ -17,6 +19,9 @@ module.exports = function (App) {
     ],
     auth_Controller.SignUp
   );
-
-  App.post(`${api}/signin`, auth_Controller.SignIn);
+  App.post(
+    `${api}/signin`,
+    [verify_SignIN.verify_User_SignIn],
+    auth_Controller.SignIn
+  );
 };

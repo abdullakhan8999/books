@@ -9,13 +9,16 @@ module.exports = (sequelize, db_connection) => {
       //   primaryKey: true,
       // },
       user_name: {
+        notNull: false,
         type: sequelize.STRING,
       },
       email: {
         type: sequelize.STRING,
+        notNull: false,
       },
       password: {
         type: sequelize.STRING,
+        notNull: false,
       },
     },
     {

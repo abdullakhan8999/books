@@ -40,46 +40,47 @@ exports.SignUp = async (req, res) => {
     });
 };
 
-exports.SignIn = (req, res) => {
-  User.findOne({
+exports.SignIn = async (req, res) => {
+  const user = await User.findOne({
     where: {
       user_name: req.body.user_name,
     },
-  })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+  });
+  //   .then((user) => {
+  //     if (!user) {
+  //       return res.status(404).send({ message: "User Not found." });
+  //     }
+
+  //     const passwordIsValid = bcrypt.compareSync(
+  //       req.body.password,
+  //       user.password
+  //     );
+
+  //     if (!passwordIsValid) {
+  //       return res.status(401).send({
+  //         accessToken: null,
+  //         message: "Invalid Password!",
+  //       });
+  //     }
+
+  const token = jwt.sign({ id: user.id }, auth_Config.secret, {
+    expiresIn: 86400, // 24 hours
+  });
+
+  const authorities = [];
+  user
+    .getRoles()
+    .then((roles) => {
+      for (let i = 0; i < roles.length; i++) {
+        authorities.push("ROLE_" + roles[i].name.toUpperCase());
       }
-
-      const passwordIsValid = bcrypt.compareSync(
-        req.body.password,
-        user.password
-      );
-
-      if (!passwordIsValid) {
-        return res.status(401).send({
-          accessToken: null,
-          message: "Invalid Password!",
-        });
-      }
-
-      const token = jwt.sign({ id: user.id }, auth_Config.secret, {
-        expiresIn: 86400, // 24 hours
-      });
-
-      const authorities = [];
-      user.getRoles().then((roles) => {
-        for (let i = 0; i < roles.length; i++) {
-          authorities.push("ROLE_" + roles[i].name.toUpperCase());
-        }
-        console.log("User successfully signIn")
-        res.status(200).send({
-          id: user.id,
-          user_name: user.user_name,
-          email: user.email,
-          roles: authorities,
-          accessToken: token,
-        });
+      console.log("User successfully signIn");
+      res.status(200).send({
+        id: user.id,
+        user_name: user.user_name,
+        email: user.email,
+        roles: authorities,
+        accessToken: token,
       });
     })
     .catch((err) => {

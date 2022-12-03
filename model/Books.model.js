@@ -9,15 +9,19 @@ module.exports = (sequelize, db_connection) => {
         primaryKey: true,
       },
       title: {
+        notNull: false,
         type: sequelize.STRING,
       },
       author: {
+        notNull: false,
         type: sequelize.STRING,
       },
       publication: {
+        notNull: false,
         type: sequelize.INTEGER,
       },
       price: {
+        notNull: false,
         type: sequelize.BIGINT,
       },
     },
