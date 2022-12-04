@@ -11,42 +11,20 @@ const db = require("./model/index");
 // db.admin.hasMany(db.users);
 // db.users.hasMany(db.admin);
 
-db.connection.sync({ force: true }).then(() => {
-  console.log("tables dropped and recreated");
-  insertBooks();
-  insertAdmin();
-  insertRole();
-});
+db.category.hasMany(db.product);
 
-// removed for auth
-// const insertUsers = async () => {
-//   const users = [
-//     {
-//       user_name: "Abdulla Khan",
-//       email: "abdulla@khan",
-//       password: "abdul@khan",
-//     },
-//     {
-//       user_name: "Patan Abdulla Khan",
-//       email: "abdulla@Patan_khan",
-//       password: "abdul@Patan_khan",
-//     },
-//     {
-//       user_name: "Azeez",
-//       email: "AZEEZ@1234",
-//       password: "azeez@321",
-//     },
-//   ];
-//   await db.users
-//     .bulkCreate(users)
-//     .then(() => {
-//       console.log("Users table is initialized");
-//     })
-//     .catch((err) => {
-//       console.log(`Error ${err} while initializing users table`);
-//     });
-// };
-const insertBooks = async () => {7
+const init = () => {
+  db.connection.sync({ force: true }).then(() => {
+    console.log("tables dropped and recreated");
+    insertCategories();
+    insertProducts();
+    insertBooks();
+    insertAdmin();
+    insertRole();
+  });
+};
+
+const insertBooks = async () => {
   const books = [
     {
       title: "A Better India: A Better World publication",
@@ -76,6 +54,7 @@ const insertBooks = async () => {7
       console.log(`Error ${err} while initializing Books table`);
     });
 };
+
 const insertAdmin = async () => {
   const admin = [
     {
@@ -94,6 +73,7 @@ const insertAdmin = async () => {
       console.log(`Error ${err} while initializing admin table`);
     });
 };
+
 const insertRole = async () => {
   await db.role
     .bulkCreate([
@@ -108,15 +88,107 @@ const insertRole = async () => {
     });
 };
 
+const insertCategories = async () => {
+  const category = [
+    {
+      name: "Fashion",
+      description:
+        "Fashion is a form of self-expression and autonomy at a particular period and place and in a specific context, of clothing, footwear, lifestyle, accessories, makeup, hairstyle, and body posture.",
+    },
+    {
+      name: "Mobiles",
+      description:
+        "A mobile phone is a wireless handheld device that allows users to make and receive calls",
+    },
+    {
+      name: "Electronics",
+      description:
+        "The field of electronics is a branch of physics and electrical engineering that deals with the emission, behavior and effects of electrons using electronic devices.",
+    },
+    {
+      name: "Appliances",
+      description:
+        "An appliance is a device or machine in your home that you use to do a job such as cleaning or cooking.",
+    },
+  ];
+  await db.category
+    .bulkCreate(category)
+    .then(() => {
+      console.log("Category table is initialized");
+    })
+    .catch((err) => {
+      console.log(`Error ${err} while initializing Category table`);
+    });
+};
+
+const insertProducts = async () => {
+  const products = [
+    {
+      name: "Samsung Galaxy Note",
+      categoryId: 2,
+      cost: 18000,
+      description:
+        "A mobile phone is a wireless handheld device that allows users to make and receive calls",
+    },
+    {
+      name: "Iphone 13",
+      categoryId: 2,
+      cost: 60000,
+      description:
+        "A mobile phone is a wireless handheld device that allows users to make and receive calls",
+    },
+    {
+      name: "Sony Bravia",
+      description:
+        "The field of electronics is a branch of physics and electrical engineering that deals with the emission, behavior and effects of electrons using electronic devices.",
+      cost: 40000,
+      categoryId: 3,
+    },
+    {
+      name: "Boat Rugged",
+      categoryId: 3,
+      cost: 4000,
+      description:
+        "The field of electronics is a branch of physics and electrical engineering that deals with the emission, behavior and effects of electrons using electronic devices.",
+    },
+    {
+      name: "JBL Storm",
+      categoryId: 3,
+      cost: 9000,
+      description:
+        "The field of electronics is a branch of physics and electrical engineering that deals with the emission, behavior and effects of electrons using electronic devices.",
+    },
+    {
+      name: "Vu 5",
+      categoryId: 2,
+      cost: 32000,
+      description:
+        "A mobile phone is a wireless handheld device that allows users to make and receive calls",
+    },
+  ];
+  await db.product
+    .bulkCreate(products)
+    .then(() => {
+      console.log("Products table is initialized");
+    })
+    .catch((err) => {
+      console.log(`Error ${err} while initializing Products table`);
+    });
+};
+
 require("./router/index")(App);
 // removed for auth
 require("./router/users.router")(App);
 require("./router/books.router")(App);
 require("./router/adminRouter")(App);
 require("./router/auth.router")(App);
+require("./router/cart.router")(App);
+require("./router/category.router")(App);
+require("./router/product.router")(App);
 
 App.listen(serverConfig.PORT, () => {
   console.log(
     `Server is up and running on http://localhost:${serverConfig.PORT}/`
   );
+  init();
 });

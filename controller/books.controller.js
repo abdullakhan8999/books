@@ -3,6 +3,7 @@ const Op = db.sequelize.Op;
 
 exports.get_All_books = async (req, res, next) => {
   // Supporting the query param
+
   const min_publication = req.query.min_publication;
   const max_publication = req.query.max_publication;
   const min_price = req.query.min_price;

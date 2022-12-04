@@ -1,22 +1,40 @@
 const Controller = require("./../controller/users.controller");
-const Validtor = require("../middlewares/Validator");
+const Validator = require("../middlewares/Validator");
+const authJwt_Verify = require("./../middlewares/authjwt");
+
 const api = "/ecomm/api/v1/users";
 module.exports = function (App) {
-  App.get(`${api}`, Controller.get_All_Users);
+  App.get(`${api}`, [authJwt_Verify.verifyToken], Controller.get_All_Users);
 
-  App.get(`${api}/:id`, [Validtor.userIdValidator], Controller.get_User);
+  App.get(
+    `${api}/:id`,
+    [authJwt_Verify.verifyToken, Validator.userIdValidator],
+    Controller.get_User
+  );
 
   App.put(
     `${api}/:id`,
-    [Validtor.user_Body_Validator, Validtor.userIdValidator],
+    [
+      authJwt_Verify.verifyToken,
+      Validator.user_Body_Validator,
+      Validator.userIdValidator,
+    ],
     Controller.putUser
   );
 
-  App.delete(`${api}/:id`, [Validtor.userIdValidator], Controller.delete_User);
+  App.delete(
+    `${api}/:id`,
+    [authJwt_Verify.verifyToken, Validator.userIdValidator],
+    Controller.delete_User
+  );
 
   App.post(
     `${api}/`,
-    [Validtor.user_Body_Validator, Validtor.user_Find_duplicate],
+    [
+      authJwt_Verify.verifyToken,
+      Validator.user_Body_Validator,
+      Validator.user_Find_duplicate,
+    ],
     Controller.post_User
   );
 };

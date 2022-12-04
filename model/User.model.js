@@ -2,12 +2,8 @@ module.exports = (sequelize, db_connection) => {
   const Users = db_connection.define(
     "users",
     {
-      // commented during authenticate
-      // id: {
-      //   type: sequelize.INTEGER,
-      //   notNull: false,
-      //   primaryKey: true,
-      // },
+      // commented during authenticate no id need
+
       user_name: {
         notNull: false,
         type: sequelize.STRING,

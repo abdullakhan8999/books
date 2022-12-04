@@ -19,6 +19,9 @@ db.admin = require("./Admin.model")(sequelize, db_connection);
 db.books = require("./Books.model")(sequelize, db_connection);
 db.users = require("./User.model")(sequelize, db_connection);
 db.role = require("./Role.model")(sequelize, db_connection);
+db.cart = require("./Cart.model")(sequelize, db_connection);
+db.category = require("./Category.model")(sequelize, db_connection);
+db.product = require("./Product.model")(sequelize, db_connection);
 
 db.role.belongsToMany(db.users, {
   through: "user_roles",
