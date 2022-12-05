@@ -6,7 +6,9 @@ const Op = db.sequelize.Op;
 
 exports.create_Cart = async (req, res, next) => {
   const cart = {
-    userId: req.userId, // this we will get from middleware
+    userId: req.userId,
+    cost: 0,
+    // this we will get from middleware
   };
 
   const itemIds = req.body.items;
