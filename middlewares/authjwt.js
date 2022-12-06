@@ -5,12 +5,15 @@ const User = db.users;
 
 exports.verifyToken = async (req, res, next) => {
   // req.headers
+  console.log(1131);
+
   let token = req.headers["x-access-token"];
   if (!token) {
     return res.status(401).json({
       message: "Invalid token",
     });
   }
+  console.log(11321);
 
   jwt.verify(token, auth_config.secret, (err, decoded) => {
     if (err) {
@@ -18,6 +21,7 @@ exports.verifyToken = async (req, res, next) => {
         message: "Unauthorized",
       });
     }
+  console.log(1133);
 
     req.userId = decoded.id;
     next();

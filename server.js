@@ -177,14 +177,13 @@ const insertProducts = async () => {
 };
 
 require("./router/index")(App);
-// removed for auth
+require("./router/auth.router")(App);
+require("./router/category.router")(App);
+require("./router/product.router")(App);
 require("./router/users.router")(App);
 require("./router/books.router")(App);
 require("./router/adminRouter")(App);
-require("./router/auth.router")(App);
 require("./router/cart.router")(App);
-require("./router/category.router")(App);
-require("./router/product.router")(App);
 
 App.listen(serverConfig.PORT, () => {
   console.log(

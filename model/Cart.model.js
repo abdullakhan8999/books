@@ -4,10 +4,9 @@ module.exports = (sequelize, db_connection) => {
     {
       id: {
         type: sequelize.INTEGER,
-        notNull: false,
-        type: sequelize.INTEGER,
-        notNull: false,
         primaryKey: true,
+        notNull: false,
+        autoIncrement: true,
       },
       cost: {
         type: sequelize.DECIMAL,
@@ -15,7 +14,7 @@ module.exports = (sequelize, db_connection) => {
       },
     },
     {
-      timestamp: false,
+      timestamps: false,
     }
   );
 };

@@ -1,14 +1,14 @@
 {
   "name": "books",
   "version": "1.0.0",
-  "description": "",
+  "description": "Ecomm App development",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
     "test": "jest",
     "start": "node server.js"
   },
-  "author": "Ashutosh Maurya",
+  "author": "abdullakhan8999@gmail.com",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
