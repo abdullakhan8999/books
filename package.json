@@ -24,5 +24,14 @@
   },
   "directories": {
     "test": "test"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdullakhan8999/books.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/abdullakhan8999/books/issues"
+  },
+  "homepage": "https://github.com/abdullakhan8999/books#readme"
 }
