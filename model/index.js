@@ -16,12 +16,9 @@ const db = {};
 db.connection = db_connection;
 db.sequelize = sequelize;
 db.admin = require("./Admin.model")(sequelize, db_connection);
-db.books = require("./Books.model")(sequelize, db_connection);
+db.todo = require("./todo.model")(sequelize, db_connection);
 db.users = require("./User.model")(sequelize, db_connection);
 db.role = require("./Role.model")(sequelize, db_connection);
-db.cart = require("./Cart.model")(sequelize, db_connection);
-db.category = require("./Category.model")(sequelize, db_connection);
-db.product = require("./Product.model")(sequelize, db_connection);
 
 db.role.belongsToMany(db.users, {
   through: "user_roles",
@@ -33,20 +30,6 @@ db.users.belongsToMany(db.role, {
   through: "user_roles",
   foreignKey: "userId",
   otherKey: "roleId",
-});
-
-db.product.belongsToMany(db.cart, {
-  through: "cart_products",
-  foreignKey: "productId",
-  otherKey: "cartId",
-  timestamp: false,
-});
-
-db.cart.belongsToMany(db.product, {
-  through: "cart_products",
-  foreignKey: "cartId",
-  otherKey: "productId",
-  timestamp: false,
 });
 
 db.ROLES = ["user", "admin"];

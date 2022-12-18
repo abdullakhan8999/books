@@ -1,5 +1,5 @@
 module.exports = {
-  DB: "books_db",
+  DB: "todo",
   HOST: "localhost",
   USER: "root",
   PASSWORD: "Ammiabba@143",

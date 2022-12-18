@@ -1,4 +1,4 @@
-const db = require("./../model/index");
+const db = require("../model/index");
 const Op = db.sequelize.Op;
 
 exports.get_All_books = async (req, res, next) => {

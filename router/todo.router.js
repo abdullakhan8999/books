@@ -1,6 +1,6 @@
-const Controller = require("./../controller/books.controller");
+const Controller = require("../controller/todo.controller");
 const Validator = require("../middlewares/Validator");
-const authjwt_Verify = require("./../middlewares/authjwt");
+const authjwt_Verify = require("../middlewares/authjwt");
 const api = "/ecomm/api/v1/books";
 
 module.exports = function (App) {

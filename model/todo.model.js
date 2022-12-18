@@ -1,20 +1,25 @@
 module.exports = (sequelize, db_connection) => {
-  return db_connection.define(
-    "cart",
+  const todo = db_connection.define(
+    "todo",
     {
       id: {
         type: sequelize.INTEGER,
-        primaryKey: true,
         notNull: false,
         autoIncrement: true,
+        primaryKey: true,
       },
-      cost: {
-        type: sequelize.DECIMAL,
+      title: {
         notNull: false,
+        type: sequelize.STRING,
+      },
+      description: {
+        notNull: false,
+        type: sequelize.STRING,
       },
     },
     {
       timestamps: false,
     }
   );
+  return todo;
 };
